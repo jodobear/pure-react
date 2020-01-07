@@ -148,3 +148,137 @@ The idea of separations of concerns the way it has been implemented till now, ju
 
 Merging the logic and view makes your code easier to navigate, easier to write, and easier to debug. You’ll spend less time hopping between files when all the related functionality is in one place.
 
+### Working with JSX
+
+#### Capitalized Component Names <a name="capitalized-component-names"></a>
+
+In JSX, a component that starts with a lowercase letter is assumed to be a built-in HTML or SVG element (div, ul, rect, etc.). Hence, all component names must be capitalized, like so; `UserName` not `userName`.
+
+#### Close Every Element <a name="close-every-element"></a>
+
+JSX requires that every element be closed, similar to XML or XHTML. This includes the ones you might be used to leaving open in HTML5, like `<br/>` not `<br>` or `<input/>` not `<input>` or maybe even `<li></li>` not just `<li>`.
+
+#### Multiple Components <a name="multiple-components"></a>
+
+You can return multiple components within a component, like so;
+```js
+function HelloWorld() {
+  return (
+    <div>
+      <Hello/> <World/>!
+    </div>
+  );
+}
+```
+#### Parenthesis <a name="parenthesis"></a>
+
+If you don't wrap the return in parenthesis then the opening tag must be on the same line as return and it's not very readable, like so;
+```js
+function HelloWorldDouble() {
+  return <div>
+    <Hello/> <World/>!
+  </div>;
+}
+```
+#### Returning Single Components <a name="returning-single-components"></a>
+
+If you take out the wrapping `<div></div>` from `HelloWorldDouble` above, then:
+```js
+// This JSX:
+  return (<Hello/> <World/>);
+
+// Becomes this JS:
+  return (
+    React.createElement(Hello, null) React.createElement(World, null)
+  );
+```
+Returning two things at once makes no sense. So that leads to this very important rule:
+**A component function must return a single element.**
+
+#### Returning Array of Components <a name="returning-array-of-components"></a>
+
+**BUT** you can return an array of components, like so;
+```js
+// This JSX;
+function HelloWorldDouble() {
+  return [<Hello/>, <World/>]
+}
+// Would turn into this JS
+// (notice the brackets).
+function HelloWorldDouble() {
+  return [
+    React.createElement(Hello, null),
+    React.createElement(World, null)
+  ];
+}
+```
+
+#### JavaScript in JSX <a name="javascript-in-jsx"></a>
+
+Surround JS objects, expressions in *braces*,`{}` and you can insert real JS in JSX, like so;
+```js
+function SubmitButton() {
+  let buttonLabel = 'Bet';
+    return (
+      <button>{buttonLabel}</button>
+    );
+}
+```
+An expression produces a value. These are expressions:
+```js
+1 + 2
+buttonLabel
+aFunctionCall()
+aFunctionName
+```
+Each of these produces (aka `returns`) a single value. In contrast, statements do not produce values and can’t be used inside JSX. Here are some examples of statements:
+
+```js
+let a = 42;
+if(true) { 42; }
+while(i < 10) { i++; }
+```
+None of these things produces, `returns` a value.
+
+#### Conditionals in JSX
+
+Since you can't use `if`, we an either use the ternary operator `?`, like so;
+```js
+function ValidIndicator() {
+  let isValid = true;
+  return (
+    <span>{ isValid ? 'valid' : 'not valid' }</span>
+  );
+}
+```
+Or using boolean operators such as `&&`, like so;
+```js
+function ValidIndicator() {
+  let isValid = true;
+  return (
+    <span>
+      { isValid && 'valid' }
+      { !isValid && 'not Valid' }
+    </span>
+  );
+}
+```
+#### Comments in JSX <a name="comments-in-jsx"></a>
+
+Comments in JSX must go inside a JavaScript block, like so;
+```js
+function ValidIndicator() {
+  let isValid = true;
+  return (
+    <span>
+    { isValid ? 'valid' : 'not valid' }
+    {
+      // comments must go inside braces
+      // as they are JS syntax
+      // multiline comments like this are ok.
+    }
+    { /* and also single line comments, like so. */ }
+    </span>
+  );
+}
+```
