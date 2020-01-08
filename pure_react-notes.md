@@ -282,3 +282,24 @@ function ValidIndicator() {
   );
 }
 ```
+
+### JSX Exercises
+
+#### ex05
+
+1. lowerCase naming of component:
+    > Warning: `<lowerCase />` is using incorrect casing. Use PascalCase for React components, or lowercase for HTML elements.
+    in lowerCase.
+2. Returning 2 elements at once:
+    > Only the second element is rendered.
+3. Returning an array of components:
+    > Both the components get rendered.
+4. Put 2 expressions inside single braces, like {x && 5; x && 7}:
+    > `SyntaxError`, can't even parse it, but 2 braces is fine, like so; `{ x && 5 }; { x && 7 }`
+5. Use return inside a JS expression:
+    > * `SyntaxError`, when using conditional.
+    > * `'x' is not defined  no-undef` when returning in a function and calling it.
+6. Return a function call like alert('hi')
+    > It displays the alert and waits for the update signal (clicking OK)
+7. Putting a quoted string inside JSX. Does it strip out the quotes?
+    > No, it displays the quotes`""`.
