@@ -128,7 +128,7 @@ Usually you'll mix the approaches, for example, if we were building Twitter, we 
 * `prop`: We started with a `Tweet` component with `className` attribute. The `className` is the `prop`. Most of them are named identically to the HTML attributes, but `className` is special in that its value becomes the `class` attribute on the DOM node.
 * `import './index.css'` imports CSS into JS. When Webpack builds the app, it sees this CSS import and learns that `index.js` depends on `index.css` so Webpack includes it in the bundled JavaScript (as a string) to be sent to the browser. We can see this in the browser – open dev console > Elements tab, and notice under `<head>` there’s a `<style>` tag that we didn’t put there. It contains the contents of `index.css`.
 * When i  tried to load an icon from local dir `../public/jodobear.jpg` it didn't load the icon but, from a CDN it did. [Icons CDN](https://icons8.com/icon/pack/free-icons/)
-* `<button className="fa fa-reply reply-button"/>` creates a button with reply icon.
-* `<button className="fa fa-retweet retweet-button"/>` creates a button with retweet icon.
-* `<button className="fa fa-heart like-button"/>` creates a button with heart(like) icon.
+* `<i className="fa fa-reply reply-button"/>` creates a button with reply icon.
+* `<i className="fa fa-retweet retweet-button"/>` creates a button with retweet icon.
+* `<i className="fa fa-heart like-button"/>` creates a button with heart(like) icon.
 * `.time::before {..}` `::before`(`:*`) is _pseudo-element_.and _adds_ an element to the page. Old spec `:before` (`:*`) is _pseudo-selector_ just a selector that selects the appropriate element, e.g. `:nth-child(2)`.
