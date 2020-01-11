@@ -48,7 +48,7 @@ The sweet spot is somewhere between “Hello World” and “entire clone of Twi
 
 As your skill set grows, low-fidelity copies of simple apps and sites like Reddit, Hacker News, and Slack make good projects. Designers call this “copywork,”. They’ll come together quickly once you can clearly “think in components,” a skill you’ll develop as you progress through the book.
 
-## P01: React Hello <a name="p01:-react-hello"></a>
+## Ex01: React Hello <a name="p01:-react-hello"></a>
 
 ### Step 1:
 ```bash
@@ -87,7 +87,7 @@ A browser will open up automatically and display “Hello World!”
 
 Starting from bottom:
 
-1. `ReactDOM.render` regular JS despite HTML looking `<HelloWorld/>` thing. React uses the concept of *virtual DOM*. It creates a representation of your component hierarchy and then renders those components by creating real DOM elements and inserting them where you tell it. In this case, that’s inside the element with an id of `root`.
+1. `ReactDOM.render` regular JS despite HTML looking `<HelloWorld/>` thing. React uses the concept of _virtual DOM_. It creates a representation of your component hierarchy and then renders those components by creating real DOM elements and inserting them where you tell it. In this case, that’s inside the element with an id of `root`.
 
 2. `ReactDOM.render` takes 2 arguments, what to render (your component, or any other React Element) and where to render (a real DOM element), like so;
 
@@ -99,7 +99,9 @@ ReactDOM.render([React Element], [DOM element]);
 4. Two other ways of writing components: ES6 classes and the now-deprecated `React.createClass`.
 5. HTML-like syntax inside render is JSX.
 
-## Tweet Example
+## [Ex02 JSX Exercises](./jsx-notes.md)
+
+## Ex03 Tweet Example
 
 We create a tweet component as follows:
 
@@ -128,7 +130,144 @@ Usually you'll mix the approaches, for example, if we were building Twitter, we 
 * `prop`: We started with a `Tweet` component with `className` attribute. The `className` is the `prop`. Most of them are named identically to the HTML attributes, but `className` is special in that its value becomes the `class` attribute on the DOM node.
 * `import './index.css'` imports CSS into JS. When Webpack builds the app, it sees this CSS import and learns that `index.js` depends on `index.css` so Webpack includes it in the bundled JavaScript (as a string) to be sent to the browser. We can see this in the browser – open dev console > Elements tab, and notice under `<head>` there’s a `<style>` tag that we didn’t put there. It contains the contents of `index.css`.
 * When i  tried to load an icon from local dir `../public/jodobear.jpg` it didn't load the icon but, from a CDN it did. [Icons CDN](https://icons8.com/icon/pack/free-icons/)
-* `<i className="fa fa-reply reply-button"/>` creates a button with reply icon.
-* `<i className="fa fa-retweet retweet-button"/>` creates a button with retweet icon.
-* `<i className="fa fa-heart like-button"/>` creates a button with heart(like) icon.
+* `<i className="fa fa-reply reply-button"/>` creates a clickable symbol with reply icon.
+* `<i className="fa fa-retweet retweet-button"/>` creates a clickable symbol with retweet icon.
+* `<i className="fa fa-heart like-button"/>` creates a clickable symbol with heart(like) icon.
 * `.time::before {..}` `::before`(`:*`) is _pseudo-element_.and _adds_ an element to the page. Old spec `:before` (`:*`) is _pseudo-selector_ just a selector that selects the appropriate element, e.g. `:nth-child(2)`.
+
+#### `<i>`
+
+The HTML `<i>` tag is used for specifying text in an alternate voice or mood, or otherwise offset from the normal prose.
+
+In earlier versions of HTML, the `<i>` tag was typically used solely for rendering text in italics, however, this is not necessarily the case with HTML 5. Style sheets can be used to format this text (just like any other element).
+
+To markup text with stress emphasis, you should use the HTML `<em>` tag.
+
+To style text in italics, you should use the CSS `font-style` property.
+
+## Props
+
+__Keyword:__ Arguments to Components
+
+Where HTML elements have “attributes,” React components have “props” (short for “properties”).
+
+We’ve already seen that React components can be written as functions, so it’s natural to assume that we could pass arguments to those functions. Props are the arguments to your components.
+
+You can pass a prop using JSX to a React component like so; `<Person name='Alice'/>` or to an HTML element; `<div className='person'/>`.
+
+Notice the `div` element is __self-closing__. In React __every element__ can be self-closing. In fact, convention is to self-close is the component has no children/contents.
+
+e.g.
+```js
+function Alice() {
+  const firstName = Alice;
+  const lastName = Foo;
+  return (
+    <Person
+      className='person'
+      age={ 42 }
+      name={ firstName + ' ' + lastName }
+    />
+  )
+}
+```
+That translates in js to;
+```js
+function Alice() {
+  const firstName = Alice;
+  const lastName = Foo;
+  return React.createElement(Person, {
+    className: 'person',
+    age: 42,
+    name: firstName + ' ' + lastName
+  }, null);
+}
+```
+Note that the props become keys and values in the object, `null` here means no children.
+
+#### React.createElement() arguments explained:
+
+* __Signature:__ `React.createElement(type,props,children)`
+
+* __type (string | `React.createClass()`):__ Can be a string which represents an HTML element (or custom HTML element) or React component instance (i.e., an instance of `React.createClass()`)
+
+* __props (`null` | object):__ Can be `null` or an object containing attributes/props and values.
+
+* __children (`null` | string | `React.createClass()` | `React.createElement()`):__
+
+Children can be `null`, a string that gets turned into a text node, an instance of `React.createClass()` or `React.createElement()`.
+
+### Receiving Props
+
+Props are passed as first argument to a component function, like so;
+```js
+function Hello(props) {
+  return <span>Hello, { props.name }</span>
+};
+```
+And used like so;
+```js
+<Hello name='Alice' />
+```
+Using arrow functions:
+```js
+const Hello = (props) => (
+  <span>Hello, { props.name }</span>
+);
+// name here is the `name` key of the prop/argument object.
+```
+ES6 _destructuring syntax for props:
+```js
+const Hello = ({ name }) => (
+  <span> Hello, { name }</span>
+);
+```
+This reads as extract the value for `name` key of the object passed as prop/argument. You can pass multiple keys, like so; `({ firstName, lastName })`. This is the common way to pass props.
+
+Another way you can write props;
+```js
+const Hello = (props) => {
+  const { name } = props;
+  return (
+    <span>Hello, { name }</span>
+  );
+};
+```
+### Modifying Props
+
+__Keyword:__ You can't!
+
+Props are _read only_. In React data flows _one way_. Components that receive props must not change them. Props can only be passed _down_ to children.
+
+### Communicating with Parent
+
+So how can you send data back to the parent?
+
+__A:__ The parent can inject a function as a prop, like so;
+```js
+function handleAction(event) {
+  console.log('Child did: ', event);
+}
+const Child = ({ onAction }) => (
+  <button onClick={ onAction }/>
+);
+const Parent = () => (
+  <Child onAction={ handleAction }/>
+);
+```
+Here, `Child` receives `onAction` prop which it can call whenever needs to send up data to the `Parent`.
+
+## Ex04 Props Tweet
+
+* __NOTE on `cp`:__ Do not use `cp -r`, it doesn't preserve symlinks, it will break `npm start`. Use `cp -a`.
+* If ever `npm start` fails, delete `node_modules` directory and run `npm install` then it should work.
+
+### Method
+
+1. Created a `testTweet` with a JSON object containing, `message`, `gravatar`, `author` object with `name` & `handle`, `likes`, `retweets` & `timestamp`.
+2. Passed a prop `tweet` to the Tweet component.
+3. In `ReactDOM.render()` method passed the prop `tweet={ testTweet }` to the Tweet component.
+4. Passed a prop `hash` to `Avatar` component that accepts the `tweet.gravatar` as value.
+5. In the `Avatar` component passed the `hash` prop which was passed as a variable to the `url` variable. So, all the gravatars that are stored in some db can be accessed using the `hash` and the `url` becomes the `src` for `img`.
+6. Similarly add props to all other components.
+

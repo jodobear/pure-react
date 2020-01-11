@@ -6,15 +6,12 @@ function Avatar() {
   return (
     <img src="https://img.icons8.com/doodle/96/000000/user-male--v1.png" className="avatar" alt="avatar" />
   )
-
-
 }
-
 
 const Message = () => {
   return (
     <div className="message">
-      {'Messages go here. Implement how to make them less than 240 ch.'}
+      {'Messages go here. Implement how to make them less than 240 char.'}
     </div>
   )
 }
@@ -57,6 +54,7 @@ function Tweet() {
     </div>
   );
 };
+
 ReactDOM.render(
   <Tweet/>,
   document.querySelector("#root")
