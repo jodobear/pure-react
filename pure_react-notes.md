@@ -130,9 +130,9 @@ Usually you'll mix the approaches, for example, if we were building Twitter, we 
 * `prop`: We started with a `Tweet` component with `className` attribute. The `className` is the `prop`. Most of them are named identically to the HTML attributes, but `className` is special in that its value becomes the `class` attribute on the DOM node.
 * `import './index.css'` imports CSS into JS. When Webpack builds the app, it sees this CSS import and learns that `index.js` depends on `index.css` so Webpack includes it in the bundled JavaScript (as a string) to be sent to the browser. We can see this in the browser – open dev console > Elements tab, and notice under `<head>` there’s a `<style>` tag that we didn’t put there. It contains the contents of `index.css`.
 * When i  tried to load an icon from local dir `../public/jodobear.jpg` it didn't load the icon but, from a CDN it did. [Icons CDN](https://icons8.com/icon/pack/free-icons/)
-* `<i className="fa fa-reply reply-button"/>` creates a clickable symbol with reply icon.
-* `<i className="fa fa-retweet retweet-button"/>` creates a clickable symbol with retweet icon.
-* `<i className="fa fa-heart like-button"/>` creates a clickable symbol with heart(like) icon.
+* `<i className="fa fa-reply reply-button"/>` creates a ~~clickable~~ symbol with reply icon.
+* `<i className="fa fa-retweet retweet-button"/>` creates a ~~clickable~~ symbol with retweet icon.
+* `<i className="fa fa-heart like-button"/>` creates a ~~clickable~~ symbol with heart(like) icon.
 * `.time::before {..}` `::before`(`:*`) is _pseudo-element_.and _adds_ an element to the page. Old spec `:before` (`:*`) is _pseudo-selector_ just a selector that selects the appropriate element, e.g. `:nth-child(2)`.
 
 #### `<i>`
@@ -266,8 +266,76 @@ Here, `Child` receives `onAction` prop which it can call whenever needs to send 
 
 1. Created a `testTweet` with a JSON object containing, `message`, `gravatar`, `author` object with `name` & `handle`, `likes`, `retweets` & `timestamp`.
 2. Passed a prop `tweet` to the Tweet component.
-3. In `ReactDOM.render()` method passed the prop `tweet={ testTweet }` to the Tweet component.
-4. Passed a prop `hash` to `Avatar` component that accepts the `tweet.gravatar` as value.
+3. In `ReactDOM.render()` method passed the prop with relevant value `tweet={ testTweet }` to the Tweet component.
+4. In the `Tweet` component passed a prop `hash` to `Avatar` component that accepts the `tweet.gravatar` as value.
 5. In the `Avatar` component passed the `hash` prop which was passed as a variable to the `url` variable. So, all the gravatars that are stored in some db can be accessed using the `hash` and the `url` becomes the `src` for `img`.
 6. Similarly add props to all other components.
+
+### Learnings
+
+* Use the Airbnb style guide + check [this article](https://medium.com/@uistephen/style-guides-for-linting-ecmascript-2015-eslint-common-google-airbnb-6c25fd3dff0) and [this guide](https://css-tricks.com/react-code-style-guide/) and eventually create your own.
+
+* To refer to items/keys inside an object use `object.key`.
+
+* Make extensive use of ternary operators!
+
+* There are many ways of writing one thing, chose one way of writing things and stick to it.
+
+* `moment` package calculates time since the supplied timestamp, like so; `moment(timestamp).fromNow()`.
+
+* I am dropping the `;` in js & react from now on.
+
+* Deconstructing/unpacking objects: `const { name, handle } = author;`
+
+* Always give functions an explicit `return`.
+
+* Arrow functions - depends if it has only one expression or more.
+
+### What to Pass as a Prop?
+
+* Props accept everything; Numbers, Booleans, Strings, Objects and Functions.
+* __Generalization Principle:__ Think of constructing general components. It is better to pass only relevant data/object to a component since then you can use it everywhere.
+
+### Naming Props
+
+* Follow the __Generalization Principle__.
+* Keep names different than HTML/DOM props/attributes.
+
+### RetweetButton
+
+_REMEMBER:_ React components can only return __one__ element, notice the extra `<span>` in `RetweetButton`
+
+When an expression evaluates to `null` or `false` inside a single braces JSX, nothing is rendered at all. To check, open devTools in the browser and check in the Elements tab, you won't see the `<span className="retweet-count">{count}</span>` when the `count === 0`.
+
+The `getRetweetCount` can be turned into a general component itself by making it more general, like so;
+```js
+function Count({ count, object }) {
+  return count > 0 ? <span className={`${object}-count`}>{count}</span> : null
+}
+```
+Now i can use this anywhere.
+
+### LikeButton
+
+Note the following difference in code;
+```js
+{ /* this doesn't return the `span` with `like-count` when count === 0 */ }
+      {count > 0 &&
+        <span className="like-count">
+          {count}
+        </span>}
+      { /* this will return `span` even if count === 0 */}
+      <span className="like-count">
+        {count > 0 ? count : null}
+      </span>
+```
+The first way, note the `span` is returned if the condition is true while in the second way the condition is inside the `span`.
+
+When i passed this expression; `{count > 0 ? {count} : null}` in the second way(note the braces around `count` when returning if condition `true`), i get the following error:
+
+`Error: Objects are not valid as a React child (found: object with keys {count}). If you meant to render a collection of children, use an array instead.`
+
+__Reason:__ We cannot return a Javascript object from inside a return call. React expects a component or some JSX or null to render the UI not some JS object and `{count}` is a JS object which is inside another JS object.
+
+## PropTypes
 

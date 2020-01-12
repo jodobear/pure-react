@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import PropTypes from 'prop-types';
 import './index.css';
 
 import moment from 'moment';
@@ -45,20 +46,28 @@ function ReplyButton () {
   }
 
 function getRetweetCount(count) {
-  if (count > 0) {
-    return (
-      <span className="retweet-count">{count}</span>
-    );
-  } else {
-    return null;
-  }
+  return (
+    count > 0 ? <span className="retweet-count">{count}</span> : null
+  );
+  // Ternary operators are awesome!
+  // if (count > 0) {
+  //   return (
+  //     <span className="retweet-count">{count}</span>
+  //   );
+  // } else {
+  //   return null;
+  // }
+}
+
+function Count({ count, object }) {
+  return count > 0 ? <span className={`${object}-count`}>{count}</span> : null
 }
 
 function RetweetButton({ count }) {
   return (
     <span className="retweet-button">
       <i className="fa fa-retweet" />
-      {getRetweetCount(count)}
+      <Count count={count} object="retweet"/>
     </span>
   );
 }
@@ -77,13 +86,20 @@ function LikeButton({ count }) {
   return (
     <span className="like-button">
       <i className="fa fa-heart" />
-      {count > 0 &&
+      {/* this doesn't return the `span` with `like-count` when count === 0 */}
+      {/* {count > 0 &&
         <span className="like-count">
           {count}
-        </span>}
+        </span>} */}
+      {/* this will return `span` even if count === 0 */}
+      <span className="like-count">
+        {count > 0 ? count : null}
+      </span>
     </span>
   );
 }
+
+
 
 function OptionsButton() {
   return (
