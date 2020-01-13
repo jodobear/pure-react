@@ -339,3 +339,137 @@ __Reason:__ We cannot return a Javascript object from inside a return call. Reac
 
 ## PropTypes
 
+* __Plain english:__ similar to the defining types in cpp, different syntax and method.
+* Allow Documentation & Debugging in one method.
+* Optional and have to import separately; `import PropTypes from 'prop-types';`
+* Usage:
+```js
+function Comment ({ author, message, likes }) {
+  return {
+    <div>
+      <div className="author">{author}</div>
+      <div className="message">{message}</div>
+      <div className="likes">
+        {likes > 0 ? likes : null} likes
+      </div>
+    </div>
+  }
+}
+
+Comment.propTypes = {
+  author: PropTypes.string.isRequired,
+  message: PropTypes.string.isRequired,
+  likes: PropTypes.number
+}
+```
+Note the following:
+* `propTypes` is set as a property/attribute on the function/component/object itself, can be arrow func or ES6 class as well.
+
+* We use the method `propTypes` (small `p`) on the component(object) while we import `PropTypes` (capital `P`).
+
+* We define prop types as an object, note the `,` after each entry.
+
+* To define the prop type we call the _class_ `PropTypes` (capital `P`), then the type of the prop and the optional keyword that specifies if it's required or not.
+
+* All prop types are _optional_ by default so, no warnings if no value or typos.
+
+* Warning if you pass a wrong type of prop or if the prop is not provided when `isRequired`.
+* **IMPORTANT** if the prop type validation fails it will only return an error not _throw_ an error and break the code. Check the console for any errors.
+
+* **Types:** `number`, `bool`, `string`, `array`, `func`, `object` or `symbol`(see below for description). Additionally,
+  * **`node`:** anything that can be rendered i.e. numbers, strings, elements or an array of those.
+  * **`element`:** a React element created with JSX syntax or by calling `React.createElement`.
+  * **`elementType`:** a type of React Element, e.g. `Comment` from above.
+
+### Validators
+
+  * **`ProtoTypes.instanceOf(class)`:** validate whether the prop is of a particular `class`. Uses JS's `instanceOf` operator. When used, the prop must be an instance of that particular `class`.
+
+  * **`PropTypes.oneOf(['a', 'b', 2, ..])`:** limit prop type to specific values.
+
+  * **`PropType.oneOfType([PropTypes.string, PropTypes.number, PropTypes.instanceOf(class), ..])`:** limit the prop to one of specified types.
+
+  * **`PropTypes.arrayOf(PropTypes.number)`:** limit the prop to an array of specified type.
+
+  * **`PropTypes.objectOf(PropTypes.number)`:** the object should have values of specified type.
+
+  * **`PropTypes.shape({student: PropTypes.string, id: PropTypes.number})`:** make the object of the specified shape. If it has more specified key value pairs then it won't give any warnings. **Not strict**.
+
+  * **`PropTypes.exact({student: PropTypes.string, id: PropTypes.number})`** **Strict** will give warnings if anything more than what's specified is present.
+
+  * **`PropTypes.any.isRequired`:** the object has to have some value, can't be undefined.
+
+### Custom Validators
+
+```js
+// custom validator to check if len of prop is 3
+function customValidator(props, propName, componentName) {
+  // propName = "myCustomProp";
+  if(props[propName].length !== 3){
+    return new Error(
+      'Invalid prop `' + propName + '` of `' + componentName + '` is not of length 3'
+    );
+  };
+};
+// component
+function TestComponent({ myCustomProp }) {
+  return (
+    <div>{myCustomProp}</div>
+  );
+};
+// defining the prop type
+TestComponent.propTypes = {
+  myCustomProp: customValidator
+}
+// no error:
+ReactDOM.render(
+  <TestComponent myCustomProp={[1, 2, 3]}/>,
+  document.getElementById('#root')
+);
+// no error:
+ReactDOM.render(
+  <TestComponent myCustomProp="abc"/>,
+  document.gerElementById('#root');
+);
+// error:
+ReactROM.render(
+  <TestComponent myCustomProp="largerThan3"/>,
+  document.getElementById('#root')
+);
+```
+
+### Ex05: Tweet with PropTypes
+
+It was pretty clear except when doing the `Tweet` component. I did it using `exact` (i.e. exact `shape`) but, doesn't follow the DRY (Don't Repeat Yourself) principle since, had to duplicate the all the prop types to make it work.
+
+Tried to use `object` but it wouldn't render and got the mentioned error. Check the docs on this error, [here](https://reactjs.org/warnings/dont-call-proptypes.html)
+```js
+// This give invariant error that you can't call PropTypes directly.
+Tweet.propTypes = {
+  tweet: PropTypes.object({
+    message: PropTypes.string.isRequired,
+    gravatar: PropTypes.string.isRequired,
+    author: PropTypes.string.isRequired,
+    likes: PropTypes.number,
+    retweets: PropTypes.number,
+    timestamp: PropTypes.string
+  })
+}
+```
+Then tried `objectOf` where it'd render but, got an `invalid PropType notation inside objectOf`:
+```js
+Tweet.propTypes = {
+  tweet: PropTypes.objectOf({
+    message: PropTypes.string.isRequired,
+    gravatar: PropTypes.string.isRequired,
+    author: PropTypes.exact({
+      name: PropTypes.string.isRequired,
+      handle: PropTypes.string.isRequired
+    }).isRequired,
+    likes: PropTypes.number,
+    retweets: PropTypes.number,
+    timestamp: PropTypes.string
+  })
+}
+```
+No matter what method i used, i pretty much duplicated the whole thing. How to do it following the DRY principle?
