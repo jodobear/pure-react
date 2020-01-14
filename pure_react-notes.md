@@ -473,3 +473,15 @@ Tweet.propTypes = {
 }
 ```
 No matter what method i used, i pretty much duplicated the whole thing. How to do it following the DRY principle?
+
+### Exercises: PropTypes
+
+#### CSS
+
+* `display: flex;` creates a flexible display.
+
+* `position: relative;` makes all it's children's position relative to itself. Then in children use `position: absolute;` to position them in absolute terms from the relevant side of parent.
+
+* `VALID <br/> THRU` this is how i got one element's text broken into two lines.
+
+* To insert space between two elements you can just add `{' '}` or use `margin`/`padding` CSS properties.
