@@ -79,10 +79,15 @@ code {
 }
 
 .card-number {
-  font-weight: 1000;
+  font-weight: 800;
   font-size: 20px;
   font-family: Arial, sans-serif;
-  padding: 100px 30px 5px;
+  padding: 100px 30px 0px;
+}
+
+.card-number-initials {
+  font-size: small;
+  padding-left: 30px;
 }
 
 .valid-thru {
@@ -96,4 +101,87 @@ code {
   position: absolute;
   left: 140px;
   font-size: small;
+}
+
+/* Poster */
+.poster {
+  width: 400px;
+  height: 400px;
+  background-color: rgb(33, 53, 53);
+  position: relative;
+}
+
+.poster > * {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.poster-image {
+  width: auto;
+  height: auto;
+  top: 0;
+  margin: auto;
+}
+
+.text {
+  display: flex;
+  justify-content: center;
+}
+
+.poster-title {
+  color: orange;
+  padding: 1rem;
+  font-style: italic;
+}
+
+.poster-text {
+  color: limegreen;
+  font-family: 'Courier New', Courier, monospace;
+  font-weight: 800;
+  font-size: large;
+}
+
+/* email */
+.email {
+  display: flex;
+  position: relative;
+  border: 0.5px solid grey;
+  width: inherit;
+  height: 5rem;
+}
+
+.email-message {
+  position: absolute;
+  bottom: 0;
+  margin: auto;
+  padding-left: 4rem;
+}
+
+.email-info {
+  display: flex;
+  padding-bottom: 2rem;
+  padding-left: 2rem;
+  justify-content: center;
+  align-items: center;
+  flex: 1;
+}
+
+.email-date {
+  right: 0;
+  margin-right: 0;
+  float: right;
+}
+
+.email-select {
+  left: 0;
+  border: 0.2px solid grey;
+  color: beige;
+}
+
+.email-pin {
+  left: 0;
+  padding-left: 3rem;
+  color: grey;
 }
