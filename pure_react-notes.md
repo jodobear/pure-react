@@ -485,3 +485,42 @@ No matter what method i used, i pretty much duplicated the whole thing. How to d
 * `VALID <br/> THRU` this is how i got one element's text broken into two lines.
 
 * To insert space between two elements you can just add `{' '}` or use `margin`/`padding` CSS properties.
+
+![email](./06-proptypes-ex/email.png)
+Can't figure out even spacing of the elements.
+
+## Children
+
+Simple concept regarding how to deal with child elements. `children` is always pluralized, when there's one child, `children` is a single _React Element_ but, when there are multiple children, it's an _array_ of React Elements.
+
+### Utility Functions
+
+`React.Children` provides utilities for dealing with the `this.props.children` opaque data structure. Available functions:
+
+* `React.Children.map(children, function)`: invokes the function on every _immediate_ child element. Returns an array.
+* `React.Children.forEach(children, function)`: similar to map, but doesn't return an array.
+* `React.Children.count(children, function)`: get the number of children.
+* `React.Children.only(children, function)`: check if it's a single child else throws an error.
+* `React.Children.toArray(children, function)`: returns the `this.props.children` opaque data structure as a flat array with keys assigned to each child. It changes keys to preserve the semantics of nested arrays when flattening lists of children i.e. it prefixes each key in the returned array s.t. each key is scoped to the input array containing it.
+
+### PropTypes for Children
+
+```js
+// component can accept 0, 1 or more children.
+propTypes: {
+  children: PropTypes.node
+}
+// component only accepts 1 child. It will earn if not component or HTM element like string or number.
+  children: PropTypes.element
+
+// component accepts element or string
+children: PropTypes.oneOf([
+  PropTypes.element,
+  PropTypes.string
+])
+// add .isRequired where needed.
+```
+
+### Exercises
+
+
