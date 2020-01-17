@@ -13,3 +13,22 @@ code {
 }
 
 /* error box */
+.error-box {
+  border: 0.2px solid red;
+  border-radius: 1rem;
+  background-color: lightcoral;
+  height: 5rem;
+  width: 20rem;
+  display: flex;
+}
+.child-text {
+  color: rebeccapurple;
+  position: absolute;
+  left: 2rem;
+  top: 1rem;
+}
+
+/* nav */
+.separator {
+  padding: 1rem;
+}

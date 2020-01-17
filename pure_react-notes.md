@@ -147,15 +147,15 @@ To style text in italics, you should use the CSS `font-style` property.
 
 ## Props
 
-__Keyword:__ Arguments to Components
+__Keyword__: Arguments to Components
 
-Where HTML elements have “attributes,” React components have “props” (short for “properties”).
+Where HTML elements have “attributes,” React components have “props” (short for “properties”). `props` itself is a dictionary with atrributes/properties as keys and their values as values. To refer to a specific prop, say `xyz`, use `props.xyz` while in ES6 you do `{ xyz }` that's the same.
 
 We’ve already seen that React components can be written as functions, so it’s natural to assume that we could pass arguments to those functions. Props are the arguments to your components.
 
 You can pass a prop using JSX to a React component like so; `<Person name='Alice'/>` or to an HTML element; `<div className='person'/>`.
 
-Notice the `div` element is __self-closing__. In React __every element__ can be self-closing. In fact, convention is to self-close is the component has no children/contents.
+Notice the `div` element is __self-closing__. In React __every element__ can be self-closing. In fact, convention is to self-close the component that has no children/contents.
 
 e.g.
 ```js
@@ -523,4 +523,8 @@ children: PropTypes.oneOf([
 
 ### Exercises
 
+1. **ErrorBox**: Solved it, but for some reason the icon won't display(works on codepen). Finally understand what's a child and how they get referred.
 
+2. **Nav**:
+  * Got stuck at `each child should have unique "key"` error. I pass the index of children to a `span` with `key` but, the span doesn't get the `key` attribute itself(!).
+  * Can't figure out how to type check for elementType using the `propType: {}` syntax(!). Only the `try {..} catch{..}` method works.
