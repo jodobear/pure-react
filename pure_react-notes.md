@@ -526,5 +526,5 @@ children: PropTypes.oneOf([
 1. **ErrorBox**: Solved it, but for some reason the icon won't display(works on codepen). Finally understand what's a child and how they get referred.
 
 2. **Nav**:
-  * Got stuck at `each child should have unique "key"` error. I pass the index of children to a `span` with `key` but, the span doesn't get the `key` attribute itself(!).
-  * Can't figure out how to type check for elementType using the `propType: {}` syntax(!). Only the `try {..} catch{..}` method works.
+  * Got stuck at `each child should have unique "key"` error. I pass the index of children to a `span` with `key` but, the span doesn't get the `key` attribute itself(!). Check [this](https://stackoverflow.com/questions/40044861/get-key-index-on-click-es6-react) and the link in the browser console error.
+  * Can't figure out how to type check for elementType using the `propType: {}` syntax(!). Only the `try {..} catch{..}` method works. Check these links; [propTypes, children](https://stackoverflow.com/questions/42122522/reactjs-what-should-the-proptypes-be-for-this-props-children), [propTypes validation](https://stackoverflow.com/questions/27366077/only-allow-children-of-a-specific-type-in-a-react-component)
