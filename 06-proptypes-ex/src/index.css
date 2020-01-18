@@ -163,15 +163,13 @@ code {
   display: flex;
   padding-bottom: 2rem;
   padding-left: 2rem;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   flex: 1;
 }
 
 .email-date {
-  right: 0;
-  margin-right: 0;
-  float: right;
+  padding-right: 1rem;
 }
 
 .email-select {

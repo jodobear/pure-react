@@ -134,7 +134,7 @@ var testTweet = {
     name: "Horn",
     handle: "justthetip"
   },
-  likes: 420,
+  likes: 42,
   retweets: 99,
   timestamp: "2020-01-11 03:44"
 };

@@ -124,7 +124,7 @@ function Email({ email }) {
           <i className="checkbox-light" />
         </span>
         <span className="email-pin">
-          <i className="fa-pinterest-p" />
+          <i className="fa fa-pinterest-p" />
         </span>
       <div className="email-info">
         <h5 className="email-sender">

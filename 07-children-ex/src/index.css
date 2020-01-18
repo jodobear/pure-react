@@ -32,3 +32,17 @@ code {
 .separator {
   padding: 1rem;
 }
+
+/* dialog box */
+.dialog {
+  display: flex;
+  flex-direction: column;
+  border: 0.1rem solid grey;
+  border-radius: 10px;
+  background-color: antiquewhite;
+}
+
+#close {
+  max-width: 4rem;
+  justify-content: flex-end;
+}

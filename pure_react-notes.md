@@ -523,8 +523,46 @@ children: PropTypes.oneOf([
 
 ### Exercises
 
-1. **ErrorBox**: Solved it, but for some reason the icon won't display(works on codepen). Finally understand what's a child and how they get referred.
+#### **ErrorBox**:
 
-2. **Nav**:
-  * Got stuck at `each child should have unique "key"` error. I pass the index of children to a `span` with `key` but, the span doesn't get the `key` attribute itself(!). Check [this](https://stackoverflow.com/questions/40044861/get-key-index-on-click-es6-react) and the link in the browser console error.
-  * Can't figure out how to type check for elementType using the `propType: {}` syntax(!). Only the `try {..} catch{..}` method works. Check these links; [propTypes, children](https://stackoverflow.com/questions/42122522/reactjs-what-should-the-proptypes-be-for-this-props-children), [propTypes validation](https://stackoverflow.com/questions/27366077/only-allow-children-of-a-specific-type-in-a-react-component)
+Solved it, but for some reason the icon won't display(works on codepen). Finally understand what's a child and how they get referred.
+
+#### **Nav**
+
+- Got stuck at `each child should have unique "key"` error. I pass the index of children to a `span` with `key` but, the span doesn't get the `key` attribute itself(!). Check [this](https://stackoverflow.com/questions/40044861/get-key-index-on-click-es6-react) and the link in the browser console error.
+
+  - The reason `span` doesn't get the `key` attribute is because React works with virtual DOM and this particular instance `key` is applied to the virtual DOM so that React has proper reference to the elements. It _DOES NOT_ add it in the actual DOM element.
+  - This code is not required and redundant since we add the keys while adding separator and the elements get the same `key` values twice:
+  ```js
+  // the following doesn't add the key!
+  const keyedItems = items.map((item, i) =>
+    <span key={2 * i} >{item}</span>
+  );
+  ```
+  * Despite, the keys being added to the children when we add the separator, we still ger `Warning: Each child in a list should have a unique "key" prop. See https://fb.me/react-warning-keys for more information.` in the console.
+
+- Can't figure out how to type check for elementType using the `propType: {}` syntax(!). Only the `try {..} catch{..}` method works. Check these links; [propTypes, children](https://stackoverflow.com/questions/42122522/reactjs-what-should-the-proptypes-be-for-this-props-children), [propTypes validation](https://stackoverflow.com/questions/27366077/only-allow-children-of-a-specific-type-in-a-react-component)
+
+- Tried to update the `PropType` and got a new error:
+```
+Warning: Failed prop type: Invalid prop `children[0]` of type `Object` supplied to `Nav`, expected instance of `NavItem`.
+    in Nav (at src/index.js:109)
+```
+code:
+```js
+Nav.propTypes = {
+  children: PropTypes.arrayOf(PropTypes.instanceOf(NavItem))
+}
+```
+
+- Finally, this is still persistent: `Warning: Each child in a list should have a unique "key" prop. See https://fb.me/react-warning-keys for more information.`
+
+#### Dialog
+
+1. The Dialog box is persistent even when i have a `close button` element, like so; `<button className="fa fa-close" value="close" id="close" onClick={this.close()}>Close</button>`. Doesn't close. Additionally, when i add the `onClick` it doesn't render and gives `TypeError: Cannot read property 'close' of undefined`.
+
+2. The `button` is rendered on the left since, `flex-direction: column;`. Failed to align it to the right.
+
+3.`PropType` definitions for `Dialog` also haven't been correctly defined, though it changes the error if i change something, error; `Failed prop type: Right-hand side of 'instanceof' is not callable in Dialog (at src/index.js:115)`
+
+
