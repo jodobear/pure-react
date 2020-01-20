@@ -565,4 +565,43 @@ Nav.propTypes = {
 
 3.`PropType` definitions for `Dialog` also haven't been correctly defined, though it changes the error if i change something, error; `Failed prop type: Right-hand side of 'instanceof' is not callable in Dialog (at src/index.js:115)`
 
+## Example: Github File List
 
+### Component Hierarchy
+- File List
+  - File item
+    - File icon
+    - File Name
+    - Commit message
+    - Time
+
+Lots of things i learnt/reinforced in this exercise.
+
+### CSS
+
+- Think about the container of the content you are trying to align. Maybe that's where you should be applying the styles. I was trying to align date to the right margin but, it wouldn't work since i was applying it to the `Time` component itself which was passed inside a `td` element. When i applied it to the `td` element, it worked.
+
+- `border-collapse: collapse;` ?????
+
+- ` overflow` deals with the content overflow from view.
+
+### JS
+
+- Font Awesome: finally worked after changing the link to: `https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css`
+
+- It was a cool idea to display the list in the form of a table. That way the items just became table data.
+
+- I didn't think of implementing the list as an array, which is natural and makes sense.
+
+- For now, (20-01-20) first session, we did a basic implementation, no children nothing.
+
+- Named exports:
+```js
+// using default syntax
+// export default Time;
+// import, like so: import Time from './time'
+
+// named export
+export { Time }
+// import, like so: import { Time } from './time'
+```
