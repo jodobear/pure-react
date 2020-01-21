@@ -589,7 +589,7 @@ Lots of things i learnt/reinforced in this exercise.
 
 - Font Awesome: finally worked after changing the link to: `https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css`
 
-- It was a cool idea to display the list in the form of a table. That way the items just became table data.
+- It was a cool idea to display the list in the form of a table. That way the items just became table data. Also, aligned themselves well.
 
 - I didn't think of implementing the list as an array, which is natural and makes sense.
 
@@ -605,3 +605,5 @@ Lots of things i learnt/reinforced in this exercise.
 export { Time }
 // import, like so: import { Time } from './time'
 ```
+
+- When rendering an array of children, use `map` to resolve the `unique id` issue.
